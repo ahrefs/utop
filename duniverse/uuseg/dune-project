@@ -1,0 +1,4 @@
+(lang dune 1.10)
+(name uuseg)
+(version v17.0.0+dune)
+(package (name uuseg))

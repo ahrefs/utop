@@ -1,0 +1,9 @@
+opam-version: "2.0"
+name: "utop_lwt_react"
+synopsis: "Reactive programming helpers for Lwt (vendored for utop)"
+depends: [
+  "dune"
+  "lwt"
+  "utop_react"
+]
+build: [["dune" "build" "-p" name]]

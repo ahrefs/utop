@@ -21,10 +21,7 @@
   (ocamlfind (>= 1.7.2))
   (lambda-term (and (>= 3.1.0) (< 4.0)))
   logs
-  lwt
-  lwt_react
-  (zed (>= 3.2.0))
-  (react (>= 1.0.0))
+   lwt
   (cppo (>= 1.1.2))
   (alcotest :with-test)
   (xdg (>= 3.9.0))))
