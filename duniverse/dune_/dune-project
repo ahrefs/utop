@@ -1,9 +1,9 @@
-(lang dune 3.22)
+(lang dune 3.21)
 ;          ^^^^
 ; When changing the version, don't forget to regenerate *.opam files
 ; by running [dune build].
 (name dune)
-(version 3.22.0)
+(version 3.21.0)
 
 (generate_opam_files true)
 (opam_file_location inside_opam_directory)
