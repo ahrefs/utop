@@ -103,14 +103,14 @@ class toplevel focused widget = object(self)
   val mutable coord = { row = 0; col = 0 }
     (* Coordinates of the cursor inside the screen. *)
 
-  val mutable push_layer_handler = Lwt_react.E.never;
-  val mutable pop_layer_handler = Lwt_react.E.never;
+  val mutable push_layer_handler = Utop_lwt_react.E.never;
+  val mutable pop_layer_handler = Utop_lwt_react.E.never;
 
-  method arm_layer_handlers (push_event : t Lwt_react.event)
+  method arm_layer_handlers (push_event : t Utop_lwt_react.event)
                             (push_handler : t -> unit)
-                            (pop_event : unit Lwt_react.event)
+                            (pop_event : unit Utop_lwt_react.event)
                             (pop_handler : unit -> unit) =
-    let open Lwt_react in
+    let open Utop_lwt_react in
     push_layer_handler <- E.map push_handler push_event;
     pop_layer_handler <- E.map pop_handler pop_event
 

@@ -478,9 +478,9 @@ val run : LTerm.t -> ?save_state : bool -> ?load_resources : bool -> ?resources_
       [resources_file] (which default to ".lambda-termrc" in the home
       directory) is loaded and the result is set to [w]. *)
 
-val run_modal : LTerm.t -> ?save_state : bool -> ?load_resources : bool -> ?resources_file : string -> t Lwt_react.event -> unit Lwt_react.event -> #t -> 'a Lwt.t -> 'a Lwt.t
+val run_modal : LTerm.t -> ?save_state : bool -> ?load_resources : bool -> ?resources_file : string -> t Utop_lwt_react.event -> unit Utop_lwt_react.event -> #t -> 'a Lwt.t -> 'a Lwt.t
   (** This function works in the same way as {!run} but also takes two
-   {!Lwt_react.event} parameters. The first one should contain
+   {!Utop_lwt_react.event} parameters. The first one should contain
    {!LTerm_widget.t} widget and makes it new topmost layer in UI. The second
    message removes the topmost level from UI. All layers are redrawn, from
    bottom to up, but only the topmost layer gets keyboard events delivered to

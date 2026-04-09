@@ -9,7 +9,7 @@
 
 [@@@warning "-7-9-27-32-33"]
 
-open Lwt_react
+open Utop_lwt_react
 open LTerm_dlist
 open LTerm_text
 open LTerm_geom

@@ -9,7 +9,7 @@
 
 (* Read a password and display it. *)
 
-open Lwt_react
+open Utop_lwt_react
 
 let ( >>= ) = Lwt.( >>= )
 

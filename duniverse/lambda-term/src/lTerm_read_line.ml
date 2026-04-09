@@ -7,7 +7,7 @@
  * This file is a part of Lambda-Term.
  *)
 
-open Lwt_react
+open Utop_lwt_react
 open LTerm_geom
 open LTerm_style
 open LTerm_key

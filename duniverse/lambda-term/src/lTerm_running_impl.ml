@@ -179,12 +179,12 @@ let run_modal term ?save_state ?(load_resources = true) ?(resources_file = lambd
   Lwt.finalize loop (fun () -> LTerm_ui.quit ui)
 
 let run term ?save_state ?load_resources ?resources_file widget waiter =
-  run_modal term ?save_state ?load_resources ?resources_file Lwt_react.E.never Lwt_react.E.never widget waiter
+  run_modal term ?save_state ?load_resources ?resources_file Utop_lwt_react.E.never Utop_lwt_react.E.never widget waiter
 
 let prepare_simple_run () =
   let waiter, wakener = wait () in
-  let push_ev, push_ev_send = Lwt_react.E.create () in
-  let pop_ev, pop_ev_send = Lwt_react.E.create () in
+  let push_ev, push_ev_send = Utop_lwt_react.E.create () in
+  let pop_ev, pop_ev_send = Utop_lwt_react.E.create () in
   let exit = wakeup wakener in
   let push_layer w = fun () -> push_ev_send (w :> t) in
   let pop_layer = pop_ev_send in

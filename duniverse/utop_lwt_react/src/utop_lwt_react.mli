@@ -9,8 +9,8 @@
     instead of the [React] module in order to get all of [React]'s functions
     plus Lwt ones.
 
-    This module is provided by OPAM package [lwt_react]. Link with ocamlfind
-    package [lwt_react]. *)
+    This module is provided by OPAM package [utop_lwt_react]. Link with
+    ocamlfind package [utop_lwt_react]. *)
 
 type 'a event = 'a React.event
     (** Type of events. *)

@@ -7,7 +7,7 @@
  * This file is a part of utop.
  *)
 
-open Lwt_react
+open Utop_lwt_react
 
 module Default_paths = struct
   let ( / ) = Filename.concat

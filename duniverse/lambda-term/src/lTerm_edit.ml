@@ -12,7 +12,7 @@ let pervasives_compare= compare
 open Zed_edit
 open LTerm_key
 open LTerm_geom
-open Lwt_react
+open Utop_lwt_react
 
 (* +-----------------------------------------------------------------+
    | Actions                                                         |

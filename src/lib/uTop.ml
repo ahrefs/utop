@@ -9,7 +9,7 @@
 
 [@@@warning "-27"]
 
-open Lwt_react
+open Utop_lwt_react
 open LTerm_text
 open LTerm_geom
 open LTerm_style
