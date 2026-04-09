@@ -1,10 +1,0 @@
-_b0
-_build
-tmp
-*~
-\.\#*
-\#*#
-support/ucd.xml
-*.native
-*.byte
-*.install

@@ -1,3 +1,0 @@
-(lang dune 1.0)
-(name utop_react)
-(version v1.2.2+dune)
