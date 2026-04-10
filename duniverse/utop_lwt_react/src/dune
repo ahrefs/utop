@@ -1,5 +1,6 @@
 (library
  (name utop_lwt_react)
+ (public_name utop.lwt_react)
  (synopsis "Reactive programming helpers for Lwt")
  (wrapped false)
  (libraries lwt react))
