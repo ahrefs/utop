@@ -4,7 +4,7 @@
  (wrapped false)
  (modes byte)
  (libraries compiler-libs.toplevel findlib.top utop_lambda_term logs.lwt threads
-   utop_lwt_react utop_react xdg zed)
+   utop_lwt_react utop_react xdg utop_zed)
  (preprocess
   (action
    (run %{bin:cppo} -V OCAML:%{ocaml_version} %{input-file}))))
