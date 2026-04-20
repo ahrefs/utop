@@ -1,0 +1,7 @@
+(library
+ (name utop_zed)
+ (public_name utop.zed)
+ (wrapped false)
+ (flags
+  (:standard -safe-string))
+ (libraries utop_react result uchar uutf uucp uuseg))

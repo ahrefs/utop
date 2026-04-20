@@ -3,8 +3,8 @@
  (public_name utop)
  (wrapped false)
  (modes byte)
- (libraries compiler-libs.toplevel findlib.top lambda-term logs.lwt threads
-   utop_lwt_react xdg zed)
+ (libraries compiler-libs.toplevel findlib.top utop_lambda_term logs.lwt threads
+   utop_lwt_react utop_react xdg zed)
  (preprocess
   (action
    (run %{bin:cppo} -V OCAML:%{ocaml_version} %{input-file}))))

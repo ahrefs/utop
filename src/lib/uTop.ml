@@ -467,7 +467,7 @@ let make_prompt ui profile count size key_sequence (recording, macro_count, macr
               txta;
               Array.make
                 (size.cols - Array.length txta - Array.length txtb)
-                (Zed_char.of_utf8 "\u{2500}", { none with foreground = Some (color lcyan blue); bold = Some bold });
+                (Utop_zed_char.of_utf8 "\u{2500}", { none with foreground = Some (color lcyan blue); bold = Some bold });
               txtb;
             ]
         ) second_line
@@ -480,9 +480,9 @@ let default_prompt =
     size
     key_sequence
     (S.l3 (fun x y z -> (x, y, z))
-       (Zed_macro.recording LTerm_read_line.macro)
-       (Zed_macro.count LTerm_read_line.macro)
-       (Zed_macro.counter LTerm_read_line.macro))
+       (Utop_zed_macro.recording LTerm_read_line.macro)
+       (Utop_zed_macro.count LTerm_read_line.macro)
+       (Utop_zed_macro.counter LTerm_read_line.macro))
 
 let prompt = ref default_prompt
 
@@ -536,7 +536,7 @@ let () =
    | Help                                                            |
    +-----------------------------------------------------------------+ *)
 
-module Bindings = Zed_input.Make (LTerm_key)
+module Bindings = Utop_zed_input.Make (LTerm_key)
 module Keys_map = Map.Make (struct type t = LTerm_key.t list let compare = compare end)
 
 let name_of_action action =
@@ -645,7 +645,7 @@ For a complete description of utop, look at the utop(1) manual page."))
   Toploop.add_directive "utop_macro"
     (Toploop.Directive_none
        (fun () ->
-          let macro = Zed_macro.contents LTerm_read_line.macro in
+          let macro = Utop_zed_macro.contents LTerm_read_line.macro in
           List.iter
             (fun action ->
                output_string stdout (name_of_action action);
@@ -845,17 +845,17 @@ module Private = struct
     if len = 0 then
       str
     else
-      let ofs, _, _ = Zed_utf8.next_error str 0 in
+      let ofs, _, _ = Utop_zed_utf8.next_error str 0 in
       if ofs = len then
         str
       else begin
         let buf = Buffer.create (len + 128) in
         if ofs > 0 then Buffer.add_substring buf str 0 ofs;
         let rec loop ofs =
-          Zed_utf8.add buf (Uchar.of_char str.[ofs]);
+          Utop_zed_utf8.add buf (Uchar.of_char str.[ofs]);
           let ofs1 = ofs + 1 in
           if ofs1 < len then
-            let ofs2, _, _ = Zed_utf8.next_error str ofs1 in
+            let ofs2, _, _ = Utop_zed_utf8.next_error str ofs1 in
             if ofs1 < ofs2 then
               Buffer.add_substring buf str ofs1 (ofs2 - ofs1);
             if ofs2 < len then

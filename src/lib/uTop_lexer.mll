@@ -152,8 +152,8 @@ and symbol idx acc = parse
         let tok = Symbol (lexeme lexbuf) in
         tokens loc.idx2 ((tok, loc) :: acc) lexbuf }
   | uchar as uchar
-      { let uChar= Zed_utf8.unsafe_extract uchar 0 in
-        if Zed_char.is_combining_mark uChar then
+      { let uChar= Utop_zed_utf8.unsafe_extract uchar 0 in
+        if Utop_zed_char.is_combining_mark uChar then
           let tok, loc= List.hd acc
           and tl= List.tl acc in
           let tok= match tok with
@@ -180,8 +180,8 @@ and cm_string idx= parse
       }
   | uchar as uchar
       {
-        let uChar= Zed_utf8.unsafe_extract uchar 0 in
-        if Zed_char.is_combining_mark uChar then
+        let uChar= Utop_zed_utf8.unsafe_extract uchar 0 in
+        if Utop_zed_char.is_combining_mark uChar then
           cm_string idx lexbuf
         else
           let idx2, terminated= string (idx + 1) true lexbuf in
@@ -205,14 +205,14 @@ and comment idx depth combining= parse
         else
           (idx, false) }
   | uchar as uchar
-      { let uChar= Zed_utf8.unsafe_extract uchar 0 in
+      { let uChar= Utop_zed_utf8.unsafe_extract uchar 0 in
         if not combining then
-          if Zed_char.is_combining_mark uChar then
+          if Utop_zed_char.is_combining_mark uChar then
             comment (idx + 1) depth false lexbuf
           else
             comment (idx + 1) depth true lexbuf
         else
-          if Zed_char.is_combining_mark uChar then
+          if Utop_zed_char.is_combining_mark uChar then
             comment idx depth true lexbuf
           else
             comment (idx + 1) depth true lexbuf
@@ -227,14 +227,14 @@ and string idx combining= parse
   | "\\\""
       { string (idx + 2) false lexbuf }
   | uchar as uchar
-      { let uChar= Zed_utf8.unsafe_extract uchar 0 in
+      { let uChar= Utop_zed_utf8.unsafe_extract uchar 0 in
         if not combining then
-          if Zed_char.is_combining_mark uChar then
+          if Utop_zed_char.is_combining_mark uChar then
             string (idx + 1) false lexbuf
           else
             string (idx + 1) true lexbuf
         else
-          if Zed_char.is_combining_mark uChar then
+          if Utop_zed_char.is_combining_mark uChar then
             string idx true lexbuf
           else
             string (idx + 1) true lexbuf
@@ -252,14 +252,14 @@ and quoted_string idx tag combining= parse
     | eof
         { (idx, false) }
     | uchar as uchar
-        { let uChar= Zed_utf8.unsafe_extract uchar 0 in
+        { let uChar= Utop_zed_utf8.unsafe_extract uchar 0 in
           if not combining then
-            if Zed_char.is_combining_mark uChar then
+            if Utop_zed_char.is_combining_mark uChar then
               quoted_string (idx + 1) tag false lexbuf
             else
               quoted_string (idx + 1) tag true lexbuf
           else
-            if Zed_char.is_combining_mark uChar then
+            if Utop_zed_char.is_combining_mark uChar then
               quoted_string idx tag true lexbuf
             else
               quoted_string (idx + 1) tag true lexbuf

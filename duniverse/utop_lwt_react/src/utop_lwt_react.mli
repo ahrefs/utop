@@ -3,23 +3,23 @@
 
 
 
-(** React utilities *)
+(** Utop_react utilities *)
 
-(** This module is an overlay for the [React] module. You can open it
-    instead of the [React] module in order to get all of [React]'s functions
+(** This module is an overlay for the [Utop_react] module. You can open it
+    instead of the [Utop_react] module in order to get all of [Utop_react]'s functions
     plus Lwt ones.
 
     This module is provided by OPAM package [utop_lwt_react]. Link with
     ocamlfind package [utop_lwt_react]. *)
 
-type 'a event = 'a React.event
+type 'a event = 'a Utop_react.event
     (** Type of events. *)
 
-type 'a signal = 'a React.signal
+type 'a signal = 'a Utop_react.signal
     (** Type of signals. *)
 
 module E : sig
-  include module type of React.E
+  include module type of Utop_react.E
 
   (** {2 Lwt-specific utilities} *)
 
@@ -34,11 +34,11 @@ module E : sig
       Avoid trying to create an “asynchronous loop” by calling [next e] again in
       a callback attached to the promise returned by [next e]:
 
-      - The callback is called within the React update step, so calling [next e]
+      - The callback is called within the Utop_react update step, so calling [next e]
         within it will return a promise that is fulfilled with the same value as
         the current occurrence.
-      - If you instead arrange for the React update step to end (for example, by
-        calling [Lwt.pause ()] within the callback), multiple React update steps
+      - If you instead arrange for the Utop_react update step to end (for example, by
+        calling [Lwt.pause ()] within the callback), multiple Utop_react update steps
         may occur before the callback calls [next e] again, so some occurrences
         can be effectively “lost.”
 
@@ -78,9 +78,9 @@ module E : sig
     (** [keep e] keeps a reference to [e] so it will never be garbage
         collected. *)
 
-  (** {2 Threaded versions of React transformation functions} *)
+  (** {2 Threaded versions of Utop_react transformation functions} *)
 
-  (** The following functions behave as their [React] counterpart,
+  (** The following functions behave as their [Utop_react] counterpart,
       except that they take functions that may yield.
 
       As usual the [_s] suffix is used when calls are serialized, and
@@ -113,7 +113,7 @@ module E : sig
 end
 
 module S : sig
-  include module type of React.S
+  include module type of Utop_react.S
 
   (** {2 Monadic interface} *)
 
@@ -147,9 +147,9 @@ module S : sig
     (** [keep s] keeps a reference to [s] so it will never be garbage
         collected. *)
 
-  (** {2 Threaded versions of React transformation functions} *)
+  (** {2 Threaded versions of Utop_react transformation functions} *)
 
-  (** The following functions behave as their [React] counterpart,
+  (** The following functions behave as their [Utop_react] counterpart,
       except that they take functions that may yield.
 
       The [_s] suffix means that calls are serialized.

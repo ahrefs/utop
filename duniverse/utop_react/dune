@@ -1,0 +1,6 @@
+(library
+ (name utop_react)
+ (public_name utop.react)
+ (synopsis "Utop_reactive programming")
+ (wrapped false))
+

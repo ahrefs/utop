@@ -5,11 +5,11 @@
 
 open Lwt.Infix
 
-type 'a event = 'a React.event
-type 'a signal = 'a React.signal
+type 'a event = 'a Utop_react.event
+type 'a signal = 'a Utop_react.signal
 
 module E = struct
-  include React.E
+  include Utop_react.E
 
   (* +---------------------------------------------------------------+
      | Lwt-specific utilities                                        |
@@ -257,7 +257,7 @@ module E = struct
 end
 
 module S = struct
-  include React.S
+  include Utop_react.S
 
   (* +---------------------------------------------------------------+
      | Lwt-specific utilities                                        |

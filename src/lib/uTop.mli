@@ -9,12 +9,12 @@
 
 (** UTop configuration. *)
 
-open React
+open Utop_react
 
 val version : string
   (** Version of utop. *)
 
-val count : int React.signal
+val count : int Utop_react.signal
   (** The number of commands already executed. *)
 
 val keywords : Set.Make(String).t ref
@@ -212,25 +212,25 @@ val stashable_session_history : UTop_history.t
 type profile = Dark | Light
     (** Profile for colors. *)
 
-val profile : profile React.signal
+val profile : profile Utop_react.signal
   (** The color profile. It defaults to {!Dark}. This is used by the
       default prompt to choose colors. *)
 
 val set_profile : profile -> unit
   (** Sets the color profile. *)
 
-val size : LTerm_geom.size React.signal
+val size : LTerm_geom.size Utop_react.signal
   (** The current size of the terminal. This is used only in the
       console UI. *)
 
-val key_sequence : LTerm_key.t list React.signal
+val key_sequence : LTerm_key.t list Utop_react.signal
   (** The current key sequence entered by the user. This is used only
       in the console UI. *)
 
 val time : float ref
   (** The time of the beginning of the current command. *)
 
-val prompt : LTerm_text.t React.signal ref
+val prompt : LTerm_text.t Utop_react.signal ref
   (** The prompt. *)
 
 (** {6 Edit mode configuration} *)

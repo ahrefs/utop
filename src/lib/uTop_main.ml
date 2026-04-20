@@ -78,7 +78,7 @@ let index_of_offset src ofs =
     else if ofs' = String.length src then
       -1
     else
-      aux (idx + 1) (Zed_utf8.unsafe_next src ofs')
+      aux (idx + 1) (Utop_zed_utf8.unsafe_next src ofs')
   in
   aux 0 0
 
@@ -93,8 +93,8 @@ let get_line src line =
     else if line' = line then
       (String.sub src ofs (String.length src - ofs), skipped)
     else
-      let ch, next_ofs = Zed_utf8.unsafe_extract_next src ofs in
-      if Zed_utf8.escaped_char ch = "\\n" then
+      let ch, next_ofs = Utop_zed_utf8.unsafe_extract_next src ofs in
+      if Utop_zed_utf8.escaped_char ch = "\\n" then
         aux (line' + 1) next_ofs (skipped + 1)
       else
         aux line' next_ofs (skipped + 1)
@@ -168,11 +168,11 @@ let parse_and_check input ~eos_is_error =
   (result, Buffer.contents buf)
 
 let add_terminator s =
-  let terminator = UTop.get_phrase_terminator () |> Zed_string.unsafe_of_utf8 in
-  if Zed_string.ends_with s ~suffix:terminator then
+  let terminator = UTop.get_phrase_terminator () |> Utop_zed_string.unsafe_of_utf8 in
+  if Utop_zed_string.ends_with s ~suffix:terminator then
     s
   else
-    Zed_string.append s terminator
+    Utop_zed_string.append s terminator
 
 let is_accept : LTerm_read_line.action -> bool = function
   | Accept -> true
@@ -210,15 +210,15 @@ class read_phrase ~term = object(self)
   method! exec ?(keys=[]) = function
     | action :: actions when S.value self#mode = LTerm_read_line.Edition &&
                              is_accept action  -> begin
-        Zed_macro.add self#macro action;
-        let input = Zed_rope.to_string (Zed_edit.text self#edit) in
+        Utop_zed_macro.add self#macro action;
+        let input = Utop_zed_rope.to_string (Utop_zed_edit.text self#edit) in
         let input =
           if action == UTop.end_and_accept_current_phrase then
             add_terminator input
           else
             input
         in
-        let input_utf8= Zed_string.to_utf8 input in
+        let input_utf8= Utop_zed_string.to_utf8 input in
         (* Toploop does that: *)
         Location.reset ();
         try
@@ -255,7 +255,7 @@ class read_phrase ~term = object(self)
         styled.(i) <- (ch, LTerm_style.merge token_style style)
       done
     in
-    UTop_styles.stylise stylise (UTop_lexer.lex_string (Zed_string.to_utf8 (LTerm_text.to_string styled)));
+    UTop_styles.stylise stylise (UTop_lexer.lex_string (Utop_zed_string.to_utf8 (LTerm_text.to_string styled)));
 
     if not last then
       (* Parenthesis matching. *)
@@ -281,10 +281,10 @@ class read_phrase ~term = object(self)
     let pos, words =
       UTop_complete.complete
         ~phrase_terminator:(UTop.get_phrase_terminator ())
-        ~input:(Zed_string.to_utf8 (Zed_rope.to_string self#input_prev))
+        ~input:(Utop_zed_string.to_utf8 (Utop_zed_rope.to_string self#input_prev))
     in
     let words= words |> List.map (fun (k, v)->
-      (Zed_string.unsafe_of_utf8 k, Zed_string.unsafe_of_utf8 v)) in
+      (Utop_zed_string.unsafe_of_utf8 k, Utop_zed_string.unsafe_of_utf8 v)) in
     self#set_completion pos words
 
   method! show_box = S.value self#mode <> LTerm_read_line.Edition || UTop.get_show_box ()
@@ -532,7 +532,7 @@ type rewrite_rule = {
   (* Values that must exist and be persistent for the rule to apply. *)
   rewrite : Location.t -> Parsetree.expression -> Parsetree.expression;
   (* The rewrite function. *)
-  enabled : bool React.signal;
+  enabled : bool Utop_react.signal;
   (* Whether the rule is enabled or not. *)
 }
 
@@ -607,7 +607,7 @@ let is_persistent_in_env longident =
     false
 
 let rule_matches rule path =
-  React.S.value rule.enabled &&
+  Utop_react.S.value rule.enabled &&
   (match rule_path rule with
    | None -> false
    | Some path' -> Path.same path path') &&
@@ -1003,7 +1003,7 @@ module Emacs(M : sig end) = struct
 
   let process_input add_to_history eos_is_error =
     let input = read_data () in
-    let input_zed= Zed_string.unsafe_of_utf8 input in
+    let input_zed= Utop_zed_string.unsafe_of_utf8 input in
     let result, warnings = parse_and_check input ~eos_is_error in
     match result with
       | UTop.Value phrase ->
@@ -1144,7 +1144,7 @@ module Emacs(M : sig end) = struct
                 send "history-bound" "";
                 loop_commands history_prev history_next
             | entry :: history_prev ->
-                List.iter (send "history-data") (split_at '\n' (Zed_string.to_utf8 entry));
+                List.iter (send "history-data") (split_at '\n' (Utop_zed_string.to_utf8 entry));
                 send "history-end" "";
                 loop_commands history_prev (input :: history_next)
         end
@@ -1157,7 +1157,7 @@ module Emacs(M : sig end) = struct
             | entry :: history_next ->
                 List.iter (send "history-data") (split_at '\n' entry);
                 send "history-end" "";
-                loop_commands ((Zed_string.unsafe_of_utf8 input) :: history_prev) history_next
+                loop_commands ((Utop_zed_string.unsafe_of_utf8 input) :: history_prev) history_next
         end
       | Some ("exit", code) ->
           exit (int_of_string code)

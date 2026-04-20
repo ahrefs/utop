@@ -258,7 +258,7 @@ type file_kind = Directory | File
 
 let basename name =
   let name' = Filename.basename name in
-  if name' = "." && not (Zed_utf8.ends_with name ".") then
+  if name' = "." && not (Utop_zed_utf8.ends_with name ".") then
     ""
   else
     name'
@@ -810,7 +810,7 @@ let complete ~phrase_terminator ~input =
     | [(Symbol "#", _); ((Lident _ | Uident _), _); (String (_, true), _); (Blanks, { idx2 = stop })] ->
         (stop, [(phrase_terminator, "")])
     | [(Symbol "#", _); ((Lident _ | Uident _), _); (String (_, true), _); (Symbol sym, { idx1 = start })] ->
-        if Zed_utf8.starts_with phrase_terminator sym then
+        if Utop_zed_utf8.starts_with phrase_terminator sym then
           (start, [(phrase_terminator, "")])
         else
           (0, [])
@@ -856,7 +856,7 @@ let complete ~phrase_terminator ~input =
         let list = String_map.bindings map in
         let name = basename file in
         let result = lookup_assoc name list in
-        (loc.idx2 - Zed_utf8.length name,
+        (loc.idx2 - Utop_zed_utf8.length name,
          List.map (function (w, Directory) -> (w, "") | (w, File) -> (w, "\"" ^ phrase_terminator)) result)
 
     (* Completion on #ppx. *)
@@ -885,7 +885,7 @@ let complete ~phrase_terminator ~input =
         let list = String_map.bindings map in
         let name = basename file in
         let result = lookup_assoc name list in
-        (loc.idx2 - Zed_utf8.length name,
+        (loc.idx2 - Utop_zed_utf8.length name,
          List.map (function (w, Directory) -> (w, "") | (w, File) -> (w, "\"" ^ phrase_terminator)) result)
 
     (* Completion on #use and #mod_use *)
@@ -915,7 +915,7 @@ let complete ~phrase_terminator ~input =
         let list = String_map.bindings map in
         let name = basename file in
         let result = lookup_assoc name list in
-        (loc.idx2 - Zed_utf8.length name,
+        (loc.idx2 - Utop_zed_utf8.length name,
          List.map (function (w, Directory) -> (w, "") | (w, File) -> (w, "\"" ^ phrase_terminator)) result)
 
     (* Completion on #directory and #cd. *)
@@ -924,7 +924,7 @@ let complete ~phrase_terminator ~input =
         let list = list_directories (Filename.dirname file) in
         let name = basename file in
         let result = lookup name list in
-        (loc.idx2 - Zed_utf8.length name, List.map (function dir -> (dir, "")) result)
+        (loc.idx2 - Utop_zed_utf8.length name, List.map (function dir -> (dir, "")) result)
 
     (* Generic completion on directives. *)
     | [(Symbol "#", _); ((Lident dir | Uident dir), _); (Blanks, { idx2 = stop })] ->
